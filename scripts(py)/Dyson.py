@@ -1,7 +1,7 @@
 from telegram import *
 from telegram.ext import *
 import ChatGpt
-import messages2
+import messagesDyson
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 
@@ -9,20 +9,14 @@ class BigD:
     def __init__(self):
         self.state = None
         self.state_back = {}
-        self.user_data = 0
-        self.text = messages2
+        self.user_data = {}
+        self.text = messagesDyson.Dyson()
         
     def start_command(self, update, context: CallbackContext):
         self.user_data[] = update.effective_chat.id
         context.bot.send_message(chat_id=id, text = self.text.salam, 
-         reply_markup=ReplyKeyboardMarkup(self.text.start))
+         reply_markup=ReplyKeyboardMarkup(self.text.start, resize_keyboard=True))
         self.state = 0
-
-        # Define the menu buttons
-        self.button1 = InlineKeyboardButton("Product", callback_data='1')
-        self.button2 = InlineKeyboardButton("About", callback_data='2')
-        self.button3 = InlineKeyboardButton("Support", callback_data='3')
-        self.menu = InlineKeyboardMarkup([[self.button1],[self.button2],[self.button3]])
 
     def handle_callback(self, update, context):
         query = update.callback_query.data
